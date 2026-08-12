@@ -205,7 +205,7 @@ LIMIT 10;
 
 ### Consulta executada no PostgreSQL
 
-![Consulta SQL no PostgreSQL](docs/images/postgresql-query.png)
+![Consulta SQL no PostgreSQL](docs/postgresql-query.png)
 
 ---
 
@@ -217,7 +217,11 @@ O Metabase foi executado utilizando Docker e conectado ao banco `lighthouse`.
 
 ### Dashboard
 
-![Dashboard Metabase](docs/images/metabase-dashboard.png)
+![Dashboard Metabase](docs/metabase-dashboard.png)
+
+### Relatório PDF
+
+![Metabase - Fornecedores - Análise](docs/analise-fornecedores.pdf)
 
 ---
 
