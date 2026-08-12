@@ -170,8 +170,8 @@ O PostgreSQL foi executado utilizando Docker.
 docker run -d \
   --name postgres-lighthouse \
   -e POSTGRES_DB=lighthouse \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_USER=**** \
+  -e POSTGRES_PASSWORD=**** \
   -p 5432:5432 \
   postgres:16
 ```
@@ -279,4 +279,4 @@ Pretendo evoluir este projeto adicionando:
 
 **Leandro Soares**
 
-Projeto desenvolvido para estudos e evolução na área de Engenharia de Dados.
+Projeto desenvolvido para estudos e evolução na área de Engenharia de Dados, atendendo ao programa Lighthouse.
