@@ -73,9 +73,9 @@ lh-nautical-data-engineering/
 │   └── questao_5_1.sql
 │
 ├── docs/
-│   └── images/
-│       ├── postgresql-query.png
-│       └── metabase-dashboard.png
+│    ├── postgresql-query.png
+│    └── metabase-dashboard.png
+│    └── analise-fornecedores.pdf
 │
 ├── schema.py
 ├── schema.sql
