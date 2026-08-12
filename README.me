@@ -1,0 +1,52 @@
+# LH Nautical - Projeto de Engenharia de Dados
+
+Projeto desenvolvido durante a formação em Engenharia de Dados.
+
+## Objetivo
+
+Realizar a ingestão, armazenamento e análise de dados provenientes de arquivos CSV de um sistema ERP.
+
+## Tecnologias utilizadas
+
+- Python 3
+- PostgreSQL
+- Docker
+- SQL
+- Metabase
+- Git/GitHub
+
+## Pipeline
+
+CSV
+↓
+Python
+↓
+PostgreSQL
+↓
+SQL
+↓
+Metabase
+
+## Etapas desenvolvidas
+
+### 1. Criação do Schema
+
+Foi desenvolvido um script Python responsável por identificar as colunas dos arquivos CSV e gerar automaticamente o arquivo `schema.sql` para criação das tabelas no PostgreSQL.
+
+### 2. Carregamento dos dados
+
+Foi desenvolvido um script Python para realizar o carregamento dos arquivos CSV no PostgreSQL.
+
+### 3. Análise de clientes
+
+Foram realizadas consultas SQL para identificar clientes com maior ticket médio e maior diversidade de categorias.
+
+### 4. Dimensão de calendário
+
+Foi criada uma dimensão de datas utilizando SQL para considerar também os dias sem vendas.
+
+A análise foi realizada considerando apenas as lojas físicas (`channel = 'pos'`).
+
+### 5. Visualização
+
+Os resultados foram disponibilizados no Metabase para criação de visualizações e análises.

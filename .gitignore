@@ -1,0 +1,17 @@
+# Dados brutos
+csv/
+
+# Resultados de consultas
+resultado_*.txt
+
+# Python
+__pycache__/
+*.pyc
+
+# Ambiente virtual
+venv/
+.venv/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
