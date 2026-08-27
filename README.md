@@ -224,6 +224,7 @@ docker run -d \
 --name metabase \
 -p 3000:3000 \
 metabase/metabase:latest
+```
 
 ### Dashboard
 
