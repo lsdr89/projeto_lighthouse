@@ -98,6 +98,10 @@ A partir dessas informações foi gerado o arquivo:
 schema.sql
 ```
 
+Após gerar o arquivo schema.sql, executar o comando para importar o schema dentro do docker
+
+<code> docker exec -i postgres-lighthouse psql -U postgres -d lighthouse < schema.sql </code>
+
 Esse arquivo contém os comandos SQL necessários para criação das tabelas no PostgreSQL.
 
 Script utilizado:
