@@ -219,6 +219,11 @@ O Metabase foi utilizado para realizar consultas SQL e criar visualizações dos
 
 O Metabase foi executado utilizando Docker e conectado ao banco `lighthouse`.
 
+<code> docker run -d \
+  --name metabase \
+  -p 3000:3000 \
+  metabase/metabase:latest </code>
+
 ### Dashboard
 
 ![Dashboard Metabase](docs/metabase-dashboard.png)
