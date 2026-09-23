@@ -74,7 +74,7 @@ lh-nautical-data-engineering/
 │
 ├── docs/
 │    ├── postgresql-query.png
-│    └── metabase-dashboard.png
+│    ├── metabase-dashboard.png
 │    └── analise-fornecedores.pdf
 │
 ├── schema.py
@@ -86,23 +86,63 @@ lh-nautical-data-engineering/
 
 ---
 
-## Etapas do Projeto
+# Etapas do Projeto
 
-### 1. Criação do Schema
+## 1. Preparação da Infraestrutura
+
+Para execução do projeto foi utilizado Docker para disponibilizar os serviços necessários.
+
+### PostgreSQL
+
+O PostgreSQL foi executado utilizando Docker.
+
+```bash
+docker run -d \
+  --name postgres-lighthouse \
+  -e POSTGRES_DB=lighthouse \
+  -e POSTGRES_USER=**** \
+  -e POSTGRES_PASSWORD=**** \
+  -p 5432:5432 \
+  postgres:16
+```
+
+Verificar se o container está em execução:
+
+```bash
+docker ps
+```
+
+Acessar o banco:
+
+```bash
+docker exec -it postgres-lighthouse \
+psql -U postgres -d lighthouse
+```
+
+### Metabase
+
+O Metabase foi executado utilizando Docker e conectado posteriormente ao banco PostgreSQL.
+
+```bash
+docker run -d \
+--name metabase \
+-p 3000:3000 \
+metabase/metabase:latest
+```
+
+Após a inicialização dos containers, o ambiente estava preparado para receber os dados e realizar as análises.
+
+---
+
+## 2. Desenvolvimento em Python
 
 Foi desenvolvido um script em Python para realizar a leitura dos arquivos CSV e identificar suas colunas.
 
-A partir dessas informações foi gerado o arquivo:
+A partir dessas informações foi gerado automaticamente o arquivo:
 
 ```text
 schema.sql
 ```
-
-Após gerar o arquivo schema.sql, executar o comando para importar o schema dentro do docker
-
-<code> docker exec -i postgres-lighthouse psql -U postgres -d lighthouse < schema.sql </code>
-
-Esse arquivo contém os comandos SQL necessários para criação das tabelas no PostgreSQL.
 
 Script utilizado:
 
@@ -110,13 +150,9 @@ Script utilizado:
 schema.py
 ```
 
----
+Também foi desenvolvido um segundo script responsável por realizar a carga dos dados.
 
-### 2. Carregamento dos Dados
-
-Após a criação do schema, foi desenvolvido um script Python para realizar o carregamento dos arquivos CSV no PostgreSQL.
-
-O script realiza a leitura dos arquivos e insere os registros nas respectivas tabelas.
+Esse script realiza a leitura dos arquivos CSV e insere os registros nas respectivas tabelas do PostgreSQL.
 
 Script utilizado:
 
@@ -128,7 +164,41 @@ O processo de carregamento foi realizado utilizando Python e PostgreSQL.
 
 ---
 
-### 3. Análise de Clientes
+## 3. Criação do Banco e Validação dos Dados
+
+Após gerar o arquivo `schema.sql`, foi realizado o carregamento da estrutura das tabelas no PostgreSQL através do comando:
+
+```bash
+docker exec -i postgres-lighthouse psql -U postgres -d lighthouse < schema.sql
+```
+
+Esse arquivo contém todos os comandos SQL necessários para criação das tabelas utilizadas no projeto.
+
+Após a criação das tabelas, foi executado o script de carga dos dados.
+
+Em seguida, os dados foram validados diretamente no PostgreSQL através do terminal Linux.
+
+Exemplo:
+
+```sql
+SELECT *
+FROM orders
+LIMIT 10;
+```
+
+### Consulta executada no PostgreSQL
+
+![Consulta SQL no PostgreSQL](docs/postgresql-query.png)
+
+---
+
+## 4. Criação das Consultas e Dashboards no Metabase
+
+Após o carregamento e validação dos dados, o Metabase foi conectado ao banco PostgreSQL `lighthouse`.
+
+A ferramenta foi utilizada para realizar consultas SQL e construir visualizações analíticas.
+
+### Análise de Clientes
 
 Foram realizadas consultas SQL para identificar clientes com maior ticket médio e maior diversidade de categorias.
 
@@ -144,7 +214,7 @@ Para a análise foram considerados clientes que compraram produtos de pelo menos
 
 ---
 
-### 4. Dimensão de Calendário
+### Dimensão de Calendário
 
 Foi criada uma dimensão de calendário utilizando SQL.
 
@@ -165,66 +235,6 @@ channel = 'pos'
 Essa abordagem evita que dias sem vendas sejam ignorados no cálculo da média.
 
 ---
-
-## PostgreSQL
-
-O PostgreSQL foi executado utilizando Docker.
-
-```bash
-docker run -d \
-  --name postgres-lighthouse \
-  -e POSTGRES_DB=lighthouse \
-  -e POSTGRES_USER=**** \
-  -e POSTGRES_PASSWORD=**** \
-  -p 5432:5432 \
-  postgres:16
-```
-
-Para verificar o container:
-
-```bash
-docker ps
-```
-
-Para acessar o banco:
-
-```bash
-docker exec -it postgres-lighthouse \
-psql -U postgres -d lighthouse
-```
-
----
-
-## Validação dos Dados
-
-Após o carregamento, os dados foram validados diretamente no PostgreSQL através do terminal Linux.
-
-Exemplo:
-
-```sql
-SELECT *
-FROM orders
-LIMIT 10;
-```
-
-### Consulta executada no PostgreSQL
-
-![Consulta SQL no PostgreSQL](docs/postgresql-query.png)
-
----
-
-## Metabase
-
-O Metabase foi utilizado para realizar consultas SQL e criar visualizações dos dados armazenados no PostgreSQL.
-
-O Metabase foi executado utilizando Docker e conectado ao banco `lighthouse`.
-
-```bash
-docker run -d \
---name metabase \
--p 3000:3000 \
-metabase/metabase:latest
-```
 
 ### Dashboard
 
